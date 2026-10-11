@@ -1,9 +1,11 @@
 
-I1 = imread('vintage_postcard.tif');
+%I1 = imread('vintage_postcard.tif');
 %I1 = imread('pout.tif');
 %I1 = imread('office_5.jpg'); I1=I1(:,:,2);
 %I1 = imread('office_1.jpg'); I1=I1(:,:,2);
 %I1 = imread('low_light.tif');
+I1 = imread('test1b.jpg');
+
 I1=im2double(I1);
 
 % damage contrast
