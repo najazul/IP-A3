@@ -21,14 +21,45 @@ function RGB_map = chart_correction(RGB_reference,RGB_measured)
 
 % ---- INSERT YOUR CODE BELOW -----
 
-% REPLACE THIS LINE WITH YOUR OWN CODE
-RGB_map = round(255*rand(256,3)); % <--- for now this returns a dummy result
+% the degrees are changed depending on the bad image reference's chart
+% values, the visualizations are found in the chart_test.mlx file
 
-% HINT  - you can try and work these out from first principles or use interp1 or 
-% polyfit/polyval to estimate the corrections from the measured to reference
-% measurements for each of the values 0..255. Any fitted values outside 0..255 
-% should be adjusted accordingly. Map values should be integers too.
+% red channel fit
+deg = 1;                        
+x = RGB_measured(:, 1);         
+y = RGB_reference(:, 1);        
+
+p = polyfit(x, y, deg);
+levels = (0:255)';               
+Rfit = polyval(p, levels);
+
+% green channel fit
+deg = 1;                        
+x = RGB_measured(:, 2);         
+y = RGB_reference(:, 2);        
+
+p = polyfit(x, y, deg);
+levels = (0:255)';               
+Gfit = polyval(p, levels);
+
+% blue channel fit
+deg = 1;                        
+x = RGB_measured(:, 3);         
+y = RGB_reference(:, 3);        
+
+p = polyfit(x, y, deg);
+levels = (0:255)';               
+Bfit = polyval(p, levels);
+
+% join all each channels into 1 matrix
+RGB_map = [Rfit, Gfit, Bfit];
+
+% round off values and clip values greater than 255 and less than 0
+RGB_map = round(RGB_map);    
+RGB_map = max(RGB_map, 0);       
+RGB_map = min(RGB_map, 255);
 
 % ---- INSERT YOUR CODE ABOVE -----
 
 return
+end

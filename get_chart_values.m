@@ -17,16 +17,34 @@ function RGB_list = get_chart_values(chart_image)
 
 % ---- INSERT YOUR CODE BELOW -----
 
-% DELETE THIS LINE OF CODE
-RGB_list = round(255*rand(24,3)); % <--- for now this returns a dummy result
+% get the char_image size
+[h, w, c] = size(chart_image);
+
+% resize to remove edges
+I1 = chart_image(68:1045, 68:1527, :);
+
+% get the new size and get the offsets
+[h, w, c] = size(I1);
+h_offset = h/4;
+w_offset = w/6;
+
+% for polyfit to work (it expects double not uint8)
+% also for faster loop since this creates an allocated size rather than a
+% vector which grows
+
+RGB_list = zeros(24, 3);
+
+for i = 1:4
+    for j = 1:6
+        % get the midpoint for each offset
+        row = round((h_offset*i) - (h_offset/2));
+        col = round((w_offset*j) - (w_offset/2));
+        % create a continous 24 x 3 blocks using the offsets
+        RGB_list((i-1)*6 + j, :) = I1(row, col, :);
+    end
+end
 
 % ---- INSERT YOUR CODE ABOVE -----
 
 return
 end
-
-
-
-
-
-

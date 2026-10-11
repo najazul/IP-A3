@@ -1,0 +1,15 @@
+# MATLAB autosave and backup files
+*.asv
+*.m~
+
+# Compiled files
+*.mex*
+*.mlappinstall
+*.mltbx
+
+# Simulink cache
+slprj/
+*.slxc
+
+# Mac system file
+.DS_Store
