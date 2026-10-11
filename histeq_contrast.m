@@ -1,20 +1,17 @@
-% HISTEQ_CONTRAST - histogram equalisation for contrast enhancement
-%
-% Usage:
-%         eq_img = histeq_contrast(img)
-%
-%  input image data is assumed to be in range 0..1
-
 function eq_img = histeq_contrast(img)
 
-% ----- INSERT YOUR CODE BELOW -----
+pixels = round(img * 255) + 1;
 
-% OPTIONAL HINT to make it easier to index you can multiply the img 
-%   values by 255 and use a 256 element histogram.
+H = histcounts(pixels, 1:1:257);
 
-% REPLACE THIS LINE OF CODE
-eq_img = rand(size(img)); % <--- return dummy result for now
+C = cumsum(H);
 
-% ----- INSERT YOUR CODE ABOVE -----
+H0 = H(find(H > 0, 1));
 
-return
+mapping = (C - H0) / (numel(img) - H0);
+
+mapping = max(0, mapping);
+
+eq_img = reshape(mapping(pixels), size(img));
+
+end
