@@ -2,7 +2,7 @@ function eq_img = histeq_contrast(img)
 
 pixels = round(img * 255) + 1;
 
-H = histcounts(pixels, 1:1:257);
+H = histcounts(pixels, 1:257);
 
 C = cumsum(H);
 
