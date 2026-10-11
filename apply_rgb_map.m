@@ -18,13 +18,27 @@ function adjusted_image = apply_rgb_map(RGB_image,RGB_map)
 
 % ----- ADD YOUR CODE BELOW -----
 
-% DELETE THIS LINE
-adjusted_image = RGB_image; % <-- for now this returns a dummy result
+%uint8 can only hold 0-255 but the mapping holds 1-256 rows hence convert
+%to double so when we add 1 it goes to 256th index
+RGB_image = double(RGB_image);
+
+[h, w, c] = size(RGB_image);
+
+% for faster loop since this creates an allocated size rather than a
+% vector which grows and we also want uint8 output
+adjusted_image = zeros(h, w, c, 'uint8');
+
+for i = 1:h
+    for j = 1:w
+        for k = 1:c
+        map_index = RGB_image(i, j, k) + 1;
+        new_value = RGB_map(map_index, k);
+        adjusted_image(i, j, k) = new_value;
+        end
+    end
+end
 
 % ----- ADD YOUR CODE ABOVE -----
 
-% resulting image must be uint8 with values in range 0..255
-adjusted_image = uint8(adjusted_image);
 return
-
 end
